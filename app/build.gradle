@@ -1,0 +1,22 @@
+group 'com.nuc'
+version '1.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':common')
+
+    compile group: 'org.java.net.substance', name: 'substance', version: '6.0'
+    compile group: 'org.jdom', name: 'jdom2', version: '2.0.5'
+
+
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.7'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.7'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.0.1'
+}
