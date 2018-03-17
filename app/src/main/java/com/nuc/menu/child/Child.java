@@ -1,6 +1,12 @@
 package com.nuc.menu.child;
 
-public class Child implements Comparable<Child> {
+import com.nuc.menu.app.WithProperties;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class Child implements Comparable<Child>, WithProperties {
+
     private final String name;
     private final String age;
     private final String gender;
@@ -13,9 +19,21 @@ public class Child implements Comparable<Child> {
         this.caloriesRequirement = caloriesRequirement;
     }
 
+    @Override
+    public List<String> getProperties() {
+        return Arrays.asList(name, age, gender, caloriesRequirement);
+    }
+
+    @Override
+    public String getDescription() {
+        return "copilul";
+    }
+
     public String getName() {
         return name;
     }
+
+
 
     public String getAge() {
         return age;

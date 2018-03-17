@@ -11,8 +11,9 @@ import org.jdom2.output.XMLOutputter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class XMLFoodStorage implements FoodStorage {
@@ -23,7 +24,7 @@ public class XMLFoodStorage implements FoodStorage {
     private static final String LIPIDS = "lipids";
     private static final String FATS = "fats";
 
-    private String filePath;
+    private final String filePath;
 
     public XMLFoodStorage(String filePath) {
         this.filePath = filePath;

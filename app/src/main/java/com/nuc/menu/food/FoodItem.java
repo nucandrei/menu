@@ -1,6 +1,11 @@
 package com.nuc.menu.food;
 
-public class FoodItem implements Comparable<FoodItem>{
+import com.nuc.menu.app.WithProperties;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class FoodItem implements Comparable<FoodItem>, WithProperties {
 
     private final String name;
     private final String calories;
@@ -26,8 +31,18 @@ public class FoodItem implements Comparable<FoodItem>{
         this.fats = fats;
     }
 
+    @Override
+    public List<String> getProperties() {
+        return Arrays.asList(name, calories, protein, lipids, fats);
+    }
+
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getDescription() {
+        return "alimentul";
     }
 
     public String getCalories() {

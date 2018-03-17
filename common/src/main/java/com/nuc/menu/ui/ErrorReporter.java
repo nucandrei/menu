@@ -6,7 +6,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 public class ErrorReporter {
-    public static final String ERROR_MESSAGE = "<html><font color='red'><b>%s</b></font></html>";
+    private static final String ERROR_MESSAGE = "<html><font color='red'><b>%s</b></font></html>";
 
     private JComponent lastInvalidComponent = null;
     private Color lastWrongComponentBackground = null;

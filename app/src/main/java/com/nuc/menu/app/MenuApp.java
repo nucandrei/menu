@@ -3,7 +3,6 @@ package com.nuc.menu.app;
 import com.nuc.menu.child.ChildManager;
 import com.nuc.menu.child.XMLChildStorage;
 import com.nuc.menu.food.FoodManager;
-import com.nuc.menu.food.FoodStorage;
 import com.nuc.menu.food.XMLFoodStorage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +31,7 @@ public class MenuApp extends JFrame {
         });
     }
 
-    public MenuApp() {
+    private MenuApp() {
         super("Menu");
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -45,8 +44,8 @@ public class MenuApp extends JFrame {
         final JTabbedPane tabbedPane = new JTabbedPane();
 
         tabbedPane.addTab("Planificare", new JPanel());
-        tabbedPane.addTab("Management alimente", new FoodManagementPanel(this, foodManager));
-        tabbedPane.addTab("Copii", new ChildManagementPanel(this, childManager));
+        tabbedPane.addTab("Management alimente", new ManagementPanel<>(this, foodManager));
+        tabbedPane.addTab("Copii", new ManagementPanel<>(this, childManager));
 
         this.setLayout(new BorderLayout());
         this.add(tabbedPane, BorderLayout.CENTER);

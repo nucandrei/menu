@@ -1,8 +1,5 @@
 package com.nuc.menu.app;
 
-import org.pushingpixels.lafwidget.animation.AnimationConfigurationManager;
-import org.pushingpixels.lafwidget.animation.AnimationFacet;
-
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,7 +1,5 @@
 package com.nuc.menu.child;
 
-import com.nuc.menu.food.FoodItem;
-import com.nuc.menu.food.XMLFoodStorage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jdom2.Document;
@@ -19,13 +17,13 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class XMLChildStorage implements ChildStorage {
-    private static final Logger LOGGER = LogManager.getLogger(XMLFoodStorage.class);
+    private static final Logger LOGGER = LogManager.getLogger(XMLChildStorage.class);
     private static final String NAME = "name";
     private static final String CALORIES = "calories";
     public static final String AGE = "age";
     public static final String GENDER = "gender";
 
-    private String filePath;
+    private final String filePath;
 
     public XMLChildStorage(String filePath) {
         this.filePath = filePath;
