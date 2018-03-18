@@ -43,7 +43,7 @@ public class MenuApp extends JFrame {
 
         final JTabbedPane tabbedPane = new JTabbedPane();
 
-        tabbedPane.addTab("Planificare", new JPanel());
+        tabbedPane.addTab("Planificare", new PlanningPanel());
         tabbedPane.addTab("Management alimente", new ManagementPanel<>(this, foodManager));
         tabbedPane.addTab("Copii", new ManagementPanel<>(this, childManager));
 

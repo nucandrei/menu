@@ -1,6 +1,7 @@
 package com.nuc.menu.ui.table;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class PrettyTableRow {
     private final JComponent[] components;
@@ -35,5 +36,9 @@ public abstract class PrettyTableRow {
 
     boolean useSeparator() {
         return useSeparator;
+    }
+
+    public Color getSeparatorColor() {
+        return null;
     }
 }

@@ -11,6 +11,8 @@ public class ImageManager {
     public static final String REMOVE_ROW_IMAGE = "delete-row-24.png";
     public static final String ADD_ROW_IMAGE = "add-row-24.png";
     public static final String RESET_ROW_IMAGE = "reset-row-24.png";
+    public static final String LEFT_SINGLE_IMAGE = "left-single.png";
+    public static final String RIGHT_SINGLE_IMAGE = "right-single.png";
 
     private static final Map<String, ImageIcon> IMAGE_ICONS_BY_NAME = new HashMap<>();
 

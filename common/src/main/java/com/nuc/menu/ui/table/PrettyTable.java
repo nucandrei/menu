@@ -54,6 +54,8 @@ public class PrettyTable extends JPanel {
 
     public void addRow(PrettyTableRow row) {
         final JSeparator separator = new JSeparator(JSeparator.HORIZONTAL);
+        separator.setBackground(row.getSeparatorColor());
+
         for (final JComponent component : row.getComponents()) {
             if (markFocus) {
                 final JComponent exactComponent;
