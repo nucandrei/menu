@@ -133,7 +133,6 @@ public class PrettyTable extends JPanel {
 
         addFillPanel();
         this.revalidate();
-
     }
 
     private void addFillPanel() {

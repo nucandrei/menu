@@ -1,6 +1,9 @@
 package com.nuc.menu.app;
 
+import com.nuc.menu.food.FoodItem;
 import com.nuc.menu.image.ImageManager;
+import com.nuc.menu.plan.DailyPlan;
+import com.nuc.menu.plan.MealPlan;
 import com.nuc.menu.ui.table.PermanentPrettyTableRow;
 import com.nuc.menu.ui.table.PrettyTable;
 import com.nuc.menu.ui.table.PrettyTableRow;
@@ -9,60 +12,65 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PlanningPanel extends JPanel {
+
+    private final PrettyTable headerTable;
+    private final PrettyTable table;
+
     public PlanningPanel() {
-
         this.setLayout(new BorderLayout());
-        final PrettyTable headerTable = new PrettyTable(5, 5, true, false);
-        headerTable.addRow(new PermanentPrettyTableRow(true, new JLabel("Data"), new JLabel("Numar calorii"), new JLabel("Proteine"), new JLabel("Lipide"), new JLabel("Glucide"), new JLabel()));
-        addDayRow(headerTable, "1 Ianuarie 2018");
-        this.add(new JScrollPane(headerTable), BorderLayout.NORTH);
+        headerTable = new PrettyTable(5, 5, true, false);
 
-        final PrettyTable table = new PrettyTable(6, 6, true, false);
-        table.addRow(new PermanentPrettyTableRow(true, new JLabel("Masa"), new JLabel("Aliment"), new JLabel("Numar calorii"), new JLabel("Proteine"), new JLabel("Lipide"), new JLabel("Glucide"), new JLabel()));
-        addDay(table);
+        this.add(new JScrollPane(headerTable), BorderLayout.NORTH);
+        table = new PrettyTable(6, 6, true, false);
 
         this.add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
-    public void addDay(PrettyTable table) {
-        addMealRow(table, "Mic dejun");
-        addFoodItemRow(table, "Lapte");
-        addFoodItemRow(table, "Cereale");
-        addMealRow(table, "Gustare");
-        addFoodItemRow(table, "Paine");
-        addFoodItemRow(table, "Nuttela");
-        addMealRow(table, "Pranz");
-        addFoodItemRow(table, "Taitei");
-        addFoodItemRow(table, "Cartofi");
-        addFoodItemRow(table, "Carne vita");
-        addMealRow(table, "Gustare");
-        addFoodItemRow(table, "Mar");
-        addFoodItemRow(table, "Ciocolata");
-        addMealRow(table, "Cina");
-        addFoodItemRow(table, "Mamaliga");
-        addFoodItemRow(table, "Branza");
+    public void switchTo(DailyPlan dailyPlan) {
+        selectDailyPlan(dailyPlan);
+        expandDailyPlan(dailyPlan);
     }
 
-    public void addDayRow(PrettyTable table, String date) {
-        final JLabel jLabel = new JLabel(date);
+    private void selectDailyPlan(DailyPlan dailyPlan) {
+        headerTable.removeAll();
+        headerTable.addRow(new PermanentPrettyTableRow(true, new JLabel("Data"), new JLabel("Numar calorii"), new JLabel("Proteine"), new JLabel("Lipide"), new JLabel("Glucide"), new JLabel()));
 
         final JPanel dayPanel = new JPanel();
         dayPanel.add(new JButton(ImageManager.get(ImageManager.LEFT_SINGLE_IMAGE)));
-        dayPanel.add(jLabel);
+        dayPanel.add(new JLabel(dailyPlan.getDay()));
         dayPanel.add(new JButton(ImageManager.get(ImageManager.RIGHT_SINGLE_IMAGE)));
 
-        table.addRow(new PermanentPrettyTableRow(true, dayPanel, new JLabel("250"), new JLabel("30"), new JLabel("30"), new JLabel("30"), new JLabel()));
+        headerTable.addRow(new PermanentPrettyTableRow(false, dailyPlan.getComponents(dayPanel)));
     }
 
-    public void addMealRow(PrettyTable table, String mealName) {
-        table.addRow(new PermanentPrettyTableRow(true, new JLabel(mealName), new JButton(ImageManager.get(ImageManager.ADD_ROW_IMAGE)), new JLabel("250"), new JLabel("30"), new JLabel("30"), new JLabel("30")));
+    private void expandDailyPlan(DailyPlan dailyPlan) {
+        table.removeAll();
+
+        table.addRow(new PermanentPrettyTableRow(true, new JLabel("Masa"), new JLabel("Aliment"), new JLabel("Numar calorii"), new JLabel("Proteine"), new JLabel("Lipide"), new JLabel("Glucide"), new JLabel()));
+        for (MealPlan mealPlan : dailyPlan.getMealPlans()) {
+            addMealRows(table, dailyPlan, mealPlan);
+        }
     }
 
-    public void addFoodItemRow(PrettyTable table, String foodName) {
-        table.addRow(new PrettyTableRow(ImageManager.get(ImageManager.REMOVE_ROW_IMAGE), true, true, new JLabel(""), new JLabel(foodName), new JLabel("250"), new JLabel("30"), new JLabel("30"), new JLabel("30")) {
+    private void addMealRows(PrettyTable table, DailyPlan dailyPlan, MealPlan mealPlan) {
+        final JButton addMealComponent = new JButton(ImageManager.get(ImageManager.ADD_ROW_IMAGE));
+        addMealComponent.addActionListener(e -> {
+            final FoodItem foodItem = new FoodItem("Carne", "100", "30", "40", "40");
+            dailyPlan.addFoodItem(mealPlan, foodItem);
+            switchTo(dailyPlan);
+        });
+        table.addRow(new PermanentPrettyTableRow(true, mealPlan.getComponents(addMealComponent)));
+
+        for (FoodItem foodItem : mealPlan.getFoodItems()) {
+            addFoodItemRow(table, dailyPlan, mealPlan, foodItem);
+        }
+    }
+
+    private void addFoodItemRow(PrettyTable table, DailyPlan dailyPlan, MealPlan mealPlan, FoodItem foodItem) {
+        table.addRow(new PrettyTableRow(ImageManager.get(ImageManager.REMOVE_ROW_IMAGE), true, true, new JLabel(""), new JLabel(foodItem.getName()), new JLabel(foodItem.getCalories()), new JLabel(foodItem.getProtein()), new JLabel(foodItem.getLipids()), new JLabel(foodItem.getFats())) {
             @Override
             public void onRemove() {
-
+                dailyPlan.remove(mealPlan, foodItem);
             }
         });
     }
