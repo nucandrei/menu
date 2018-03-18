@@ -1,7 +1,5 @@
 package com.nuc.menu.plan;
 
-import com.nuc.menu.food.FoodItem;
-
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +43,15 @@ public class DailyPlan {
         return day;
     }
 
+    public void update() {
+        calories = mealPlans.stream().mapToDouble(MealPlan::getCalories).sum();
+        proteins = mealPlans.stream().mapToDouble(MealPlan::getProteins).sum();
+        lipids = mealPlans.stream().mapToDouble(MealPlan::getLipids).sum();
+        fats = mealPlans.stream().mapToDouble(MealPlan::getFats).sum();
+
+        updateLabels();
+    }
+
     public List<MealPlan> getMealPlans() {
         return mealPlans;
     }
@@ -54,25 +61,5 @@ public class DailyPlan {
         proteinsLabel.setText(String.valueOf(proteins));
         lipidsLabel.setText(String.valueOf(lipids));
         fatsLabel.setText(String.valueOf(fats));
-    }
-
-    public void addFoodItem(MealPlan mealPlan, FoodItem foodItem) {
-        calories += Double.parseDouble(foodItem.getCalories());
-        proteins += Double.parseDouble(foodItem.getProtein());
-        lipids += Double.parseDouble(foodItem.getLipids());
-        fats += Double.parseDouble(foodItem.getFats());
-        updateLabels();
-
-        mealPlan.add(foodItem);
-    }
-
-    public void remove(MealPlan mealPlan, FoodItem foodItem) {
-        calories -= Double.parseDouble(foodItem.getCalories());
-        proteins -= Double.parseDouble(foodItem.getProtein());
-        lipids -= Double.parseDouble(foodItem.getLipids());
-        fats -= Double.parseDouble(foodItem.getFats());
-        updateLabels();
-
-        mealPlan.remove(foodItem);
     }
 }
