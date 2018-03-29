@@ -4,7 +4,7 @@ import com.nuc.menu.child.ChildManager;
 import com.nuc.menu.child.XMLChildStorage;
 import com.nuc.menu.food.FoodManager;
 import com.nuc.menu.food.XMLFoodStorage;
-import com.nuc.menu.plan.DailyPlan;
+import com.nuc.menu.plan.DailyPlanRow;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pushingpixels.substance.api.skin.SubstanceDustLookAndFeel;
@@ -45,7 +45,7 @@ public class MenuApp extends JFrame {
         final JTabbedPane tabbedPane = new JTabbedPane();
 
         final PlanningPanel planningPanel = new PlanningPanel();
-        planningPanel.switchTo(new DailyPlan("1 Ianuarie 2018"));
+        planningPanel.switchTo(new DailyPlanRow("1 Ianuarie 2018"));
 
         tabbedPane.addTab("Planificare", planningPanel);
         tabbedPane.addTab("Management alimente", new ManagementPanel<>(this, foodManager));

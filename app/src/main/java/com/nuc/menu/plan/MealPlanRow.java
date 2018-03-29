@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MealPlan {
+public class MealPlanRow {
 
     private final JLabel mealNameLabel;
     private final JLabel caloriesLabel;
@@ -17,9 +17,9 @@ public class MealPlan {
     private double lipids = 0;
     private double fats = 0;
 
-    private final List<FoodPlan> foodPlans = new ArrayList<>();
+    private final List<FoodPlanRow> foodPlanRows = new ArrayList<>();
 
-    public MealPlan(String mealName) {
+    public MealPlanRow(String mealName) {
         mealNameLabel = new JLabel(mealName);
         caloriesLabel = new JLabel();
         proteinsLabel = new JLabel();
@@ -34,10 +34,10 @@ public class MealPlan {
     }
 
     public void update() {
-        calories = foodPlans.stream().mapToDouble(FoodPlan::getCalories).sum();
-        proteins = foodPlans.stream().mapToDouble(FoodPlan::getProtein).sum();
-        lipids = foodPlans.stream().mapToDouble(FoodPlan::getLipids).sum();
-        fats = foodPlans.stream().mapToDouble(FoodPlan::getFats).sum();
+        calories = foodPlanRows.stream().mapToDouble(FoodPlanRow::getCalories).sum();
+        proteins = foodPlanRows.stream().mapToDouble(FoodPlanRow::getProtein).sum();
+        lipids = foodPlanRows.stream().mapToDouble(FoodPlanRow::getLipids).sum();
+        fats = foodPlanRows.stream().mapToDouble(FoodPlanRow::getFats).sum();
 
         caloriesLabel.setText(String.valueOf(calories));
         proteinsLabel.setText(String.valueOf(proteins));
@@ -45,18 +45,18 @@ public class MealPlan {
         fatsLabel.setText(String.valueOf(fats));
     }
 
-    public void add(FoodPlan foodItem) {
-        foodPlans.add(foodItem);
+    public void add(FoodPlanRow foodItem) {
+        foodPlanRows.add(foodItem);
         update();
     }
 
-    public void remove(FoodPlan foodItem) {
-        foodPlans.remove(foodItem);
+    public void remove(FoodPlanRow foodItem) {
+        foodPlanRows.remove(foodItem);
         update();
     }
 
-    public List<FoodPlan> getFoodPlans() {
-        return foodPlans;
+    public List<FoodPlanRow> getFoodPlanRows() {
+        return foodPlanRows;
     }
 
     public double getCalories() {

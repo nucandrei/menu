@@ -4,15 +4,15 @@ import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class DailyPlan {
+public class DailyPlanRow {
     private String day;
 
-    private final List<MealPlan> mealPlans = Arrays.asList(
-            new MealPlan("Mic dejun"),
-            new MealPlan("Gustare dimineata"),
-            new MealPlan("Pranz"),
-            new MealPlan("Gustare dupamasa"),
-            new MealPlan("Cina"));
+    private final List<MealPlanRow> mealPlanRows = Arrays.asList(
+            new MealPlanRow("Mic dejun"),
+            new MealPlanRow("Gustare dimineata"),
+            new MealPlanRow("Pranz"),
+            new MealPlanRow("Gustare dupamasa"),
+            new MealPlanRow("Cina"));
 
     private final JLabel caloriesLabel;
     private final JLabel proteinsLabel;
@@ -24,7 +24,7 @@ public class DailyPlan {
     private double lipids = 0;
     private double fats = 0;
 
-    public DailyPlan(String day) {
+    public DailyPlanRow(String day) {
         this.day = day;
 
         caloriesLabel = new JLabel();
@@ -44,16 +44,16 @@ public class DailyPlan {
     }
 
     public void update() {
-        calories = mealPlans.stream().mapToDouble(MealPlan::getCalories).sum();
-        proteins = mealPlans.stream().mapToDouble(MealPlan::getProteins).sum();
-        lipids = mealPlans.stream().mapToDouble(MealPlan::getLipids).sum();
-        fats = mealPlans.stream().mapToDouble(MealPlan::getFats).sum();
+        calories = mealPlanRows.stream().mapToDouble(MealPlanRow::getCalories).sum();
+        proteins = mealPlanRows.stream().mapToDouble(MealPlanRow::getProteins).sum();
+        lipids = mealPlanRows.stream().mapToDouble(MealPlanRow::getLipids).sum();
+        fats = mealPlanRows.stream().mapToDouble(MealPlanRow::getFats).sum();
 
         updateLabels();
     }
 
-    public List<MealPlan> getMealPlans() {
-        return mealPlans;
+    public List<MealPlanRow> getMealPlanRows() {
+        return mealPlanRows;
     }
 
     private void updateLabels() {

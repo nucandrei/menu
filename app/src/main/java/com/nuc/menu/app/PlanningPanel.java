@@ -2,9 +2,9 @@ package com.nuc.menu.app;
 
 import com.nuc.menu.food.FoodItem;
 import com.nuc.menu.image.ImageManager;
-import com.nuc.menu.plan.DailyPlan;
-import com.nuc.menu.plan.FoodPlan;
-import com.nuc.menu.plan.MealPlan;
+import com.nuc.menu.plan.DailyPlanRow;
+import com.nuc.menu.plan.FoodPlanRow;
+import com.nuc.menu.plan.MealPlanRow;
 import com.nuc.menu.ui.table.PermanentPrettyTableRow;
 import com.nuc.menu.ui.table.PrettyTable;
 import com.nuc.menu.ui.table.PrettyTableRow;
@@ -27,63 +27,63 @@ public class PlanningPanel extends JPanel {
         this.add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
-    public void switchTo(DailyPlan dailyPlan) {
-        selectDailyPlan(dailyPlan);
-        expandDailyPlan(dailyPlan);
+    public void switchTo(DailyPlanRow dailyPlanRow) {
+        selectDailyPlan(dailyPlanRow);
+        expandDailyPlan(dailyPlanRow);
     }
 
-    private void selectDailyPlan(DailyPlan dailyPlan) {
+    private void selectDailyPlan(DailyPlanRow dailyPlanRow) {
         headerTable.removeAll();
         headerTable.addRow(new PermanentPrettyTableRow(true, new JLabel("Data"), new JLabel("Numar calorii"), new JLabel("Proteine"), new JLabel("Lipide"), new JLabel("Glucide"), new JLabel()));
 
         final JPanel dayPanel = new JPanel();
         dayPanel.add(new JButton(ImageManager.get(ImageManager.LEFT_SINGLE_IMAGE)));
-        dayPanel.add(new JLabel(dailyPlan.getDay()));
+        dayPanel.add(new JLabel(dailyPlanRow.getDay()));
         dayPanel.add(new JButton(ImageManager.get(ImageManager.RIGHT_SINGLE_IMAGE)));
 
-        headerTable.addRow(new PermanentPrettyTableRow(false, dailyPlan.getComponents(dayPanel)));
+        headerTable.addRow(new PermanentPrettyTableRow(false, dailyPlanRow.getComponents(dayPanel)));
     }
 
-    private void expandDailyPlan(DailyPlan dailyPlan) {
+    private void expandDailyPlan(DailyPlanRow dailyPlanRow) {
         table.removeAll();
 
         table.addRow(new PermanentPrettyTableRow(true, new JLabel("Masa"), new JLabel("Aliment"), new JLabel("Portie (g)"), new JLabel("Numar calorii"), new JLabel("Proteine"), new JLabel("Lipide"), new JLabel("Glucide"), new JLabel()));
-        for (MealPlan mealPlan : dailyPlan.getMealPlans()) {
-            addMealRows(table, dailyPlan, mealPlan);
+        for (MealPlanRow mealPlanRow : dailyPlanRow.getMealPlanRows()) {
+            addMealRows(table, dailyPlanRow, mealPlanRow);
         }
     }
 
-    private void addMealRows(PrettyTable table, DailyPlan dailyPlan, MealPlan mealPlan) {
+    private void addMealRows(PrettyTable table, DailyPlanRow dailyPlanRow, MealPlanRow mealPlanRow) {
         final JButton addMealComponent = new JButton(ImageManager.get(ImageManager.ADD_ROW_IMAGE));
         addMealComponent.addActionListener(e -> {
             final FoodItem foodItem = new FoodItem("Carne", "100", "30", "40", "40");
-            mealPlan.add(new FoodPlan(foodItem));
-            dailyPlan.update();
-            switchTo(dailyPlan);
+            mealPlanRow.add(new FoodPlanRow(foodItem));
+            dailyPlanRow.update();
+            switchTo(dailyPlanRow);
         });
-        table.addRow(new PermanentPrettyTableRow(true, mealPlan.getComponents(addMealComponent)));
+        table.addRow(new PermanentPrettyTableRow(true, mealPlanRow.getComponents(addMealComponent)));
 
-        for (FoodPlan foodPlan : mealPlan.getFoodPlans()) {
-            addFoodItemRow(table, dailyPlan, mealPlan, foodPlan);
+        for (FoodPlanRow foodPlanRow : mealPlanRow.getFoodPlanRows()) {
+            addFoodItemRow(table, dailyPlanRow, mealPlanRow, foodPlanRow);
         }
     }
 
-    private void addFoodItemRow(PrettyTable table, DailyPlan dailyPlan, MealPlan mealPlan, FoodPlan foodPlan) {
-        final SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(foodPlan.getPortionSize(), 1, 1000, 1);
+    private void addFoodItemRow(PrettyTable table, DailyPlanRow dailyPlanRow, MealPlanRow mealPlanRow, FoodPlanRow foodPlanRow) {
+        final SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(foodPlanRow.getPortionSize(), 1, 1000, 1);
         final JSpinner spinner = new JSpinner(spinnerNumberModel);
         spinner.addChangeListener(e -> {
             final int value = (int) spinnerNumberModel.getValue();
 
-            foodPlan.updatePortion(value);
-            dailyPlan.update();
-            mealPlan.update();
+            foodPlanRow.updatePortion(value);
+            dailyPlanRow.update();
+            mealPlanRow.update();
         });
 
-        table.addRow(new PrettyTableRow(ImageManager.get(ImageManager.REMOVE_ROW_IMAGE), true, true, foodPlan.getComponents(spinner)) {
+        table.addRow(new PrettyTableRow(ImageManager.get(ImageManager.REMOVE_ROW_IMAGE), true, true, foodPlanRow.getComponents(spinner)) {
             @Override
             public void onRemove() {
-                mealPlan.remove(foodPlan);
-                dailyPlan.update();
+                mealPlanRow.remove(foodPlanRow);
+                dailyPlanRow.update();
             }
         });
     }

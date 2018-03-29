@@ -4,7 +4,7 @@ import com.nuc.menu.food.FoodItem;
 
 import javax.swing.*;
 
-public class FoodPlan {
+public class FoodPlanRow {
     private FoodItem foodItem;
     private int portionSize;
 
@@ -18,7 +18,7 @@ public class FoodPlan {
     private double lipids;
     private double fats;
 
-    public FoodPlan(FoodItem foodItem) {
+    public FoodPlanRow(FoodItem foodItem) {
         this.foodItem = foodItem;
 
         caloriesLabel = new JLabel();
