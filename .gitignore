@@ -28,5 +28,6 @@ gradlew
 .idea/
 food.xml
 children.xml
+plans.xml
 app/out/
 common/out/

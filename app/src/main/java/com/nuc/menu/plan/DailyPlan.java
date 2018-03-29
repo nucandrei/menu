@@ -3,19 +3,25 @@ package com.nuc.menu.plan;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DailyPlan extends NutritionalInfo implements NutritionalInfoListener{
+public class DailyPlan extends NutritionalInfo implements NutritionalInfoListener {
 
     private final String day;
     private final List<MealPlan> mealPlans = new ArrayList<>();
 
+    public static DailyPlan addNewDailyPlan(String day) {
+        final DailyPlan dailyPlan = new DailyPlan(day);
+
+        dailyPlan.addMealPlan(new MealPlan("Mic dejun"));
+        dailyPlan.addMealPlan(new MealPlan("Gustare dimineata"));
+        dailyPlan.addMealPlan(new MealPlan("Pranz"));
+        dailyPlan.addMealPlan(new MealPlan("Gustare dupamasa"));
+        dailyPlan.addMealPlan(new MealPlan("Cina"));
+
+        return dailyPlan;
+    }
+
     public DailyPlan(String day) {
         this.day = day;
-
-        addMealPlan(new MealPlan("Mic dejun"));
-        addMealPlan(new MealPlan("Gustare dimineata"));
-        addMealPlan(new MealPlan("Pranz"));
-        addMealPlan(new MealPlan("Gustare dupamasa"));
-        addMealPlan(new MealPlan("Cina"));
     }
 
     @Override
@@ -36,7 +42,7 @@ public class DailyPlan extends NutritionalInfo implements NutritionalInfoListene
         return mealPlans;
     }
 
-    private void addMealPlan(MealPlan mealPlan) {
+    public void addMealPlan(MealPlan mealPlan) {
         this.mealPlans.add(mealPlan);
         mealPlan.addListener(this);
     }

@@ -2,23 +2,22 @@ package com.nuc.menu.app;
 
 import com.nuc.menu.food.FoodItem;
 import com.nuc.menu.image.ImageManager;
-import com.nuc.menu.plan.DailyPlanRow;
-import com.nuc.menu.plan.FoodPlan;
-import com.nuc.menu.plan.FoodPlanRow;
-import com.nuc.menu.plan.MealPlanRow;
+import com.nuc.menu.plan.*;
 import com.nuc.menu.ui.table.PermanentPrettyTableRow;
 import com.nuc.menu.ui.table.PrettyTable;
 import com.nuc.menu.ui.table.PrettyTableRow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class PlanningPanel extends JPanel {
 
     private final PrettyTable headerTable;
     private final PrettyTable table;
+    private DailyPlanRow dailyPlanRow;
 
-    public PlanningPanel() {
+    public PlanningPanel(PlanStorage planStorage, DailyPlan dailyPlan) {
         this.setLayout(new BorderLayout());
 
         headerTable = new PrettyTable(5, 5, true, false);
@@ -26,10 +25,15 @@ public class PlanningPanel extends JPanel {
 
         this.add(new JScrollPane(headerTable), BorderLayout.NORTH);
         this.add(new JScrollPane(table), BorderLayout.CENTER);
+        final JButton saveChangesBtn = new JButton("Salveaza modificariile");
+        saveChangesBtn.addActionListener(e -> planStorage.savePlans(Arrays.asList(dailyPlan)));
+
+        this.add(saveChangesBtn, BorderLayout.SOUTH);
     }
 
     public void switchTo(DailyPlanRow dailyPlanRow) {
-        selectDailyPlan(dailyPlanRow);
+        this.dailyPlanRow = dailyPlanRow;
+        selectDailyPlan(this.dailyPlanRow);
         expandDailyPlan(dailyPlanRow);
     }
 
