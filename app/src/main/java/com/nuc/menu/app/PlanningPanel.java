@@ -3,6 +3,7 @@ package com.nuc.menu.app;
 import com.nuc.menu.food.FoodItem;
 import com.nuc.menu.image.ImageManager;
 import com.nuc.menu.plan.DailyPlanRow;
+import com.nuc.menu.plan.FoodPlan;
 import com.nuc.menu.plan.FoodPlanRow;
 import com.nuc.menu.plan.MealPlanRow;
 import com.nuc.menu.ui.table.PermanentPrettyTableRow;
@@ -57,7 +58,7 @@ public class PlanningPanel extends JPanel {
         final JButton addMealComponent = new JButton(ImageManager.get(ImageManager.ADD_ROW_IMAGE));
         addMealComponent.addActionListener(e -> {
             final FoodItem foodItem = new FoodItem("Carne", "100", "30", "40", "40");
-            mealPlanRow.add(new FoodPlanRow(foodItem));
+            mealPlanRow.add(new FoodPlanRow(new FoodPlan(foodItem, 100)));
         });
         table.addRow(new PermanentPrettyTableRow(true, mealPlanRow.getComponents(addMealComponent)));
 

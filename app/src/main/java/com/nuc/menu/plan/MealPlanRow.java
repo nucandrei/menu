@@ -3,6 +3,7 @@ package com.nuc.menu.plan;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MealPlanRow implements NutritionalInfoListener {
 
@@ -15,8 +16,8 @@ public class MealPlanRow implements NutritionalInfoListener {
     private final List<FoodPlanRow> foodPlanRows = new ArrayList<>();
     private final MealPlan mealPlan;
 
-    MealPlanRow(String mealName) {
-        mealPlan = new MealPlan(mealName);
+    MealPlanRow(MealPlan mealName) {
+        this.mealPlan = mealName;
 
         mealNameLabel = new JLabel(mealPlan.getMealName());
         caloriesLabel = new JLabel();
@@ -25,6 +26,8 @@ public class MealPlanRow implements NutritionalInfoListener {
         fatsLabel = new JLabel();
 
         mealPlan.addListener(this);
+
+        foodPlanRows.addAll(mealPlan.getFoodPlans().stream().map(FoodPlanRow::new).collect(Collectors.toList()));
     }
 
     public JComponent[] getComponents(JComponent addMealComponent) {

@@ -12,7 +12,7 @@ public class FoodPlan extends NutritionalInfo {
     private final FoodItem foodItem;
     private int portion;
 
-    FoodPlan(FoodItem foodItem, int portion) {
+    public FoodPlan(FoodItem foodItem, int portion) {
         this.foodItem = foodItem;
 
         foodCalories = Integer.parseInt(foodItem.getCalories());

@@ -1,7 +1,5 @@
 package com.nuc.menu.plan;
 
-import com.nuc.menu.food.FoodItem;
-
 import javax.swing.*;
 
 public class FoodPlanRow implements NutritionalInfoListener {
@@ -14,14 +12,14 @@ public class FoodPlanRow implements NutritionalInfoListener {
     private final FoodPlan foodPlan;
     private final JSpinner spinner;
 
-    public FoodPlanRow(FoodItem foodItem) {
-        this.foodPlan = new FoodPlan(foodItem, 100);
+    public FoodPlanRow(FoodPlan foodPlan) {
+        this.foodPlan = foodPlan;
         caloriesLabel = new JLabel();
         proteinsLabel = new JLabel();
         lipidsLabel = new JLabel();
         fatsLabel = new JLabel();
 
-        final SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(foodPlan.getPortion(), 1, 1000, 1);
+        final SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(this.foodPlan.getPortion(), 1, 1000, 1);
         spinner = new JSpinner(spinnerNumberModel);
         spinner.addChangeListener(e -> {
             final int value = (int) spinnerNumberModel.getValue();

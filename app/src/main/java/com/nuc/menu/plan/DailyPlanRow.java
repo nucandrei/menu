@@ -16,8 +16,8 @@ public class DailyPlanRow implements NutritionalInfoListener {
     private final JLabel lipidsLabel;
     private final JLabel fatsLabel;
 
-    public DailyPlanRow(String day, Consumer<DailyPlanRow> consumer) {
-        this.dailyPlan = new DailyPlan(day);
+    public DailyPlanRow(DailyPlan dailyPlan, Consumer<DailyPlanRow> consumer) {
+        this.dailyPlan = dailyPlan;
         this.consumer = consumer;
 
         caloriesLabel = new JLabel();
@@ -26,17 +26,7 @@ public class DailyPlanRow implements NutritionalInfoListener {
         fatsLabel = new JLabel();
 
         dailyPlan.addListener(this);
-
-        addMeal(new MealPlanRow("Mic dejun"));
-        addMeal(new MealPlanRow("Gustare dimineata"));
-        addMeal(new MealPlanRow("Pranz"));
-        addMeal(new MealPlanRow("Gustare dupamasa"));
-        addMeal(new MealPlanRow("Cina"));
-    }
-
-    public void addMeal(MealPlanRow mealPlanRow) {
-        mealPlanRows.add(mealPlanRow);
-        dailyPlan.addMealPlan(mealPlanRow.getMealPlan());
+        dailyPlan.getMealPlans().forEach(mealPlan -> mealPlanRows.add(new MealPlanRow(mealPlan)));
     }
 
     public JComponent[] getComponents(JComponent titleComponent) {

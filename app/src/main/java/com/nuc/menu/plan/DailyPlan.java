@@ -8,13 +8,14 @@ public class DailyPlan extends NutritionalInfo implements NutritionalInfoListene
     private final String day;
     private final List<MealPlan> mealPlans = new ArrayList<>();
 
-    DailyPlan(String day) {
+    public DailyPlan(String day) {
         this.day = day;
-    }
 
-    void addMealPlan(MealPlan mealPlan) {
-        this.mealPlans.add(mealPlan);
-        mealPlan.addListener(this);
+        addMealPlan(new MealPlan("Mic dejun"));
+        addMealPlan(new MealPlan("Gustare dimineata"));
+        addMealPlan(new MealPlan("Pranz"));
+        addMealPlan(new MealPlan("Gustare dupamasa"));
+        addMealPlan(new MealPlan("Cina"));
     }
 
     @Override
@@ -29,5 +30,14 @@ public class DailyPlan extends NutritionalInfo implements NutritionalInfoListene
 
     String getDay() {
         return day;
+    }
+
+    List<MealPlan> getMealPlans() {
+        return mealPlans;
+    }
+
+    private void addMealPlan(MealPlan mealPlan) {
+        this.mealPlans.add(mealPlan);
+        mealPlan.addListener(this);
     }
 }
