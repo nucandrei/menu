@@ -3,6 +3,7 @@ package com.nuc.menu.app;
 import com.nuc.menu.food.FoodItem;
 import com.nuc.menu.image.ImageManager;
 import com.nuc.menu.plan.DailyPlanRow;
+import com.nuc.menu.plan.FoodPlan;
 import com.nuc.menu.plan.FoodPlanRow;
 import com.nuc.menu.plan.MealPlanRow;
 import com.nuc.menu.ui.table.PermanentPrettyTableRow;
@@ -75,8 +76,8 @@ public class PlanningPanel extends JPanel {
             final int value = (int) spinnerNumberModel.getValue();
 
             foodPlanRow.updatePortion(value);
-            dailyPlanRow.update();
             mealPlanRow.update();
+            dailyPlanRow.update();
         });
 
         table.addRow(new PrettyTableRow(ImageManager.get(ImageManager.REMOVE_ROW_IMAGE), true, true, foodPlanRow.getComponents(spinner)) {

@@ -19,7 +19,7 @@ public class DailyPlanRow {
     private final JLabel lipidsLabel;
     private final JLabel fatsLabel;
 
-    private double calories = 0;
+    private int calories = 0;
     private double proteins = 0;
     private double lipids = 0;
     private double fats = 0;
@@ -44,7 +44,7 @@ public class DailyPlanRow {
     }
 
     public void update() {
-        calories = mealPlanRows.stream().mapToDouble(MealPlanRow::getCalories).sum();
+        calories = mealPlanRows.stream().mapToInt(MealPlanRow::getCalories).sum();
         proteins = mealPlanRows.stream().mapToDouble(MealPlanRow::getProteins).sum();
         lipids = mealPlanRows.stream().mapToDouble(MealPlanRow::getLipids).sum();
         fats = mealPlanRows.stream().mapToDouble(MealPlanRow::getFats).sum();
