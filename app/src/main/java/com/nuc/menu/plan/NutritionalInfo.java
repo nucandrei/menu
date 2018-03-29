@@ -46,13 +46,15 @@ public class NutritionalInfo {
 
     public void addListener(NutritionalInfoListener listener) {
         this.listeners.add(listener);
+        listener.notifyChange();
     }
 
     public void removeListener(NutritionalInfoListener listener) {
         this.listeners.remove(listener);
+        listener.notifyChange();
     }
 
-    public void notifyAllListeners(boolean recomputeModel) {
-        this.listeners.forEach(listener -> listener.notifyChange(recomputeModel));
+    public void notifyAllListeners() {
+        this.listeners.forEach(NutritionalInfoListener::notifyChange);
     }
 }

@@ -1,38 +1,39 @@
 package com.nuc.menu.plan;
 
 import javax.swing.*;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-public class DailyPlanRow {
-    private String day;
+public class DailyPlanRow implements NutritionalInfoListener {
 
-    private final List<MealPlanRow> mealPlanRows = Arrays.asList(
-            new MealPlanRow("Mic dejun"),
-            new MealPlanRow("Gustare dimineata"),
-            new MealPlanRow("Pranz"),
-            new MealPlanRow("Gustare dupamasa"),
-            new MealPlanRow("Cina"));
+    private final DailyPlan dailyPlan;
+    private final List<MealPlanRow> mealPlanRows = new ArrayList<>();
 
     private final JLabel caloriesLabel;
     private final JLabel proteinsLabel;
     private final JLabel lipidsLabel;
     private final JLabel fatsLabel;
 
-    private int calories = 0;
-    private double proteins = 0;
-    private double lipids = 0;
-    private double fats = 0;
-
     public DailyPlanRow(String day) {
-        this.day = day;
+        this.dailyPlan = new DailyPlan(day);
 
         caloriesLabel = new JLabel();
         proteinsLabel = new JLabel();
         lipidsLabel = new JLabel();
         fatsLabel = new JLabel();
 
-        updateLabels();
+        dailyPlan.addListener(this);
+
+        addMeal(new MealPlanRow("Mic dejun"));
+        addMeal(new MealPlanRow("Gustare dimineata"));
+        addMeal(new MealPlanRow("Pranz"));
+        addMeal(new MealPlanRow("Gustare dupamasa"));
+        addMeal(new MealPlanRow("Cina"));
+    }
+
+    public void addMeal(MealPlanRow mealPlanRow) {
+        mealPlanRows.add(mealPlanRow);
+        dailyPlan.addMealPlan(mealPlanRow.getMealPlan());
     }
 
     public JComponent[] getComponents(JComponent titleComponent) {
@@ -40,26 +41,18 @@ public class DailyPlanRow {
     }
 
     public String getDay() {
-        return day;
-    }
-
-    public void update() {
-        calories = mealPlanRows.stream().mapToInt(MealPlanRow::getCalories).sum();
-        proteins = mealPlanRows.stream().mapToDouble(MealPlanRow::getProteins).sum();
-        lipids = mealPlanRows.stream().mapToDouble(MealPlanRow::getLipids).sum();
-        fats = mealPlanRows.stream().mapToDouble(MealPlanRow::getFats).sum();
-
-        updateLabels();
+        return dailyPlan.getDay();
     }
 
     public List<MealPlanRow> getMealPlanRows() {
         return mealPlanRows;
     }
 
-    private void updateLabels() {
-        caloriesLabel.setText(String.valueOf(calories));
-        proteinsLabel.setText(String.valueOf(proteins));
-        lipidsLabel.setText(String.valueOf(lipids));
-        fatsLabel.setText(String.valueOf(fats));
+    @Override
+    public void notifyChange() {
+        caloriesLabel.setText(String.valueOf(dailyPlan.getCalories()));
+        proteinsLabel.setText(String.valueOf(dailyPlan.getProteins()));
+        lipidsLabel.setText(String.valueOf(dailyPlan.getLipids()));
+        fatsLabel.setText(String.valueOf(dailyPlan.getFats()));
     }
 }

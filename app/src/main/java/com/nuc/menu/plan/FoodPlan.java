@@ -12,9 +12,8 @@ public class FoodPlan extends NutritionalInfo {
     private final FoodItem foodItem;
     private int portion;
 
-    public FoodPlan(FoodItem foodItem, int portion) {
+    FoodPlan(FoodItem foodItem, int portion) {
         this.foodItem = foodItem;
-        this.portion = portion;
 
         foodCalories = Integer.parseInt(foodItem.getCalories());
         foodFats = Double.parseDouble(foodItem.getFats());
@@ -32,7 +31,7 @@ public class FoodPlan extends NutritionalInfo {
         setLipids(foodLipids * portion / 100);
         setFats(foodFats * portion / 100);
 
-        notifyAllListeners(false);
+        notifyAllListeners();
     }
 
     int getPortion() {

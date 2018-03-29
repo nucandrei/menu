@@ -3,7 +3,6 @@ package com.nuc.menu.app;
 import com.nuc.menu.food.FoodItem;
 import com.nuc.menu.image.ImageManager;
 import com.nuc.menu.plan.DailyPlanRow;
-import com.nuc.menu.plan.FoodPlan;
 import com.nuc.menu.plan.FoodPlanRow;
 import com.nuc.menu.plan.MealPlanRow;
 import com.nuc.menu.ui.table.PermanentPrettyTableRow;
@@ -59,32 +58,20 @@ public class PlanningPanel extends JPanel {
         addMealComponent.addActionListener(e -> {
             final FoodItem foodItem = new FoodItem("Carne", "100", "30", "40", "40");
             mealPlanRow.add(new FoodPlanRow(foodItem));
-            dailyPlanRow.update();
             switchTo(dailyPlanRow);
         });
         table.addRow(new PermanentPrettyTableRow(true, mealPlanRow.getComponents(addMealComponent)));
 
         for (FoodPlanRow foodPlanRow : mealPlanRow.getFoodPlanRows()) {
-            addFoodItemRow(table, dailyPlanRow, mealPlanRow, foodPlanRow);
+            addFoodItemRow(table, mealPlanRow, foodPlanRow);
         }
     }
 
-    private void addFoodItemRow(PrettyTable table, DailyPlanRow dailyPlanRow, MealPlanRow mealPlanRow, FoodPlanRow foodPlanRow) {
-        final SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(foodPlanRow.getPortionSize(), 1, 1000, 1);
-        final JSpinner spinner = new JSpinner(spinnerNumberModel);
-        spinner.addChangeListener(e -> {
-            final int value = (int) spinnerNumberModel.getValue();
-
-            foodPlanRow.updatePortion(value);
-            mealPlanRow.update();
-            dailyPlanRow.update();
-        });
-
-        table.addRow(new PrettyTableRow(ImageManager.get(ImageManager.REMOVE_ROW_IMAGE), true, true, foodPlanRow.getComponents(spinner)) {
+    private void addFoodItemRow(PrettyTable table, MealPlanRow mealPlanRow, FoodPlanRow foodPlanRow) {
+        table.addRow(new PrettyTableRow(ImageManager.get(ImageManager.REMOVE_ROW_IMAGE), true, true, foodPlanRow.getComponents()) {
             @Override
             public void onRemove() {
                 mealPlanRow.remove(foodPlanRow);
-                dailyPlanRow.update();
             }
         });
     }
