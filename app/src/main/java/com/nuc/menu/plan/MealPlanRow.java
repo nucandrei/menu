@@ -46,7 +46,7 @@ public class MealPlanRow implements NutritionalInfoListener {
     }
 
     @Override
-    public void notifyChange() {
+    public void notifyChange(boolean rebuildModel) {
         caloriesLabel.setText(String.valueOf(mealPlan.getCalories()));
         proteinsLabel.setText(String.valueOf(mealPlan.getProteins()));
         lipidsLabel.setText(String.valueOf(mealPlan.getLipids()));

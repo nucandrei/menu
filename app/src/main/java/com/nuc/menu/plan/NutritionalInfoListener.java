@@ -1,5 +1,5 @@
 package com.nuc.menu.plan;
 
 public interface NutritionalInfoListener {
-    void notifyChange();
+    void notifyChange(boolean rebuildModel);
 }

@@ -45,16 +45,24 @@ public class NutritionalInfo {
     }
 
     public void addListener(NutritionalInfoListener listener) {
+        addListener(listener, false);
+    }
+
+    public void addListener(NutritionalInfoListener listener, boolean rebuildModel) {
         this.listeners.add(listener);
-        listener.notifyChange();
+        listener.notifyChange(rebuildModel);
     }
 
     public void removeListener(NutritionalInfoListener listener) {
-        this.listeners.remove(listener);
-        listener.notifyChange();
+        removeListener(listener, false);
     }
 
-    public void notifyAllListeners() {
-        this.listeners.forEach(NutritionalInfoListener::notifyChange);
+    private void removeListener(NutritionalInfoListener listener, boolean rebuildModel) {
+        this.listeners.remove(listener);
+        listener.notifyChange(rebuildModel);
+    }
+
+    public void notifyAllListeners(boolean rebuildModel) {
+        this.listeners.forEach(listener -> listener.notifyChange(rebuildModel));
     }
 }

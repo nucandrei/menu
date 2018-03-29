@@ -31,7 +31,7 @@ public class FoodPlan extends NutritionalInfo {
         setLipids(foodLipids * portion / 100);
         setFats(foodFats * portion / 100);
 
-        notifyAllListeners();
+        notifyAllListeners(false);
     }
 
     int getPortion() {

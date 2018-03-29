@@ -13,7 +13,7 @@ public class MealPlan extends NutritionalInfo implements NutritionalInfoListener
 
     public void addFoodPlan(FoodPlan foodPlan) {
         this.foodPlans.add(foodPlan);
-        foodPlan.addListener(this);
+        foodPlan.addListener(this, true);
     }
 
     public void removeFoodPlan(FoodPlan foodPlan) {
@@ -22,13 +22,13 @@ public class MealPlan extends NutritionalInfo implements NutritionalInfoListener
     }
 
     @Override
-    public void notifyChange() {
+    public void notifyChange(boolean rebuildModel) {
         setCalories(foodPlans.stream().mapToInt(NutritionalInfo::getCalories).sum());
         setProteins(foodPlans.stream().mapToDouble(NutritionalInfo::getProteins).sum());
         setLipids(foodPlans.stream().mapToDouble(NutritionalInfo::getLipids).sum());
         setFats(foodPlans.stream().mapToDouble(NutritionalInfo::getFats).sum());
 
-        notifyAllListeners();
+        notifyAllListeners(rebuildModel);
     }
 
     public String getMealName() {

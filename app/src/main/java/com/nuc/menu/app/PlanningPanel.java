@@ -44,21 +44,20 @@ public class PlanningPanel extends JPanel {
         headerTable.addRow(new PermanentPrettyTableRow(false, dailyPlanRow.getComponents(dayPanel)));
     }
 
-    private void expandDailyPlan(DailyPlanRow dailyPlanRow) {
+    public void expandDailyPlan(DailyPlanRow dailyPlanRow) {
         table.removeAll();
 
         table.addRow(new PermanentPrettyTableRow(true, new JLabel("Masa"), new JLabel("Aliment"), new JLabel("Portie (g)"), new JLabel("Numar calorii"), new JLabel("Proteine"), new JLabel("Lipide"), new JLabel("Glucide"), new JLabel()));
         for (MealPlanRow mealPlanRow : dailyPlanRow.getMealPlanRows()) {
-            addMealRows(table, dailyPlanRow, mealPlanRow);
+            addMealRows(table, mealPlanRow);
         }
     }
 
-    private void addMealRows(PrettyTable table, DailyPlanRow dailyPlanRow, MealPlanRow mealPlanRow) {
+    private void addMealRows(PrettyTable table, MealPlanRow mealPlanRow) {
         final JButton addMealComponent = new JButton(ImageManager.get(ImageManager.ADD_ROW_IMAGE));
         addMealComponent.addActionListener(e -> {
             final FoodItem foodItem = new FoodItem("Carne", "100", "30", "40", "40");
             mealPlanRow.add(new FoodPlanRow(foodItem));
-            switchTo(dailyPlanRow);
         });
         table.addRow(new PermanentPrettyTableRow(true, mealPlanRow.getComponents(addMealComponent)));
 

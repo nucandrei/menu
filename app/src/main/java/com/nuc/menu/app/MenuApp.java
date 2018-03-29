@@ -45,7 +45,7 @@ public class MenuApp extends JFrame {
         final JTabbedPane tabbedPane = new JTabbedPane();
 
         final PlanningPanel planningPanel = new PlanningPanel();
-        planningPanel.switchTo(new DailyPlanRow("1 Ianuarie 2018"));
+        planningPanel.switchTo(new DailyPlanRow("1 Ianuarie 2018", planningPanel::expandDailyPlan));
 
         tabbedPane.addTab("Planificare", planningPanel);
         tabbedPane.addTab("Management alimente", new ManagementPanel<>(this, foodManager));

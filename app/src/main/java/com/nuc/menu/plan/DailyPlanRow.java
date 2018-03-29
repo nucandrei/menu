@@ -3,10 +3,12 @@ package com.nuc.menu.plan;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class DailyPlanRow implements NutritionalInfoListener {
 
     private final DailyPlan dailyPlan;
+    private final Consumer<DailyPlanRow> consumer;
     private final List<MealPlanRow> mealPlanRows = new ArrayList<>();
 
     private final JLabel caloriesLabel;
@@ -14,8 +16,9 @@ public class DailyPlanRow implements NutritionalInfoListener {
     private final JLabel lipidsLabel;
     private final JLabel fatsLabel;
 
-    public DailyPlanRow(String day) {
+    public DailyPlanRow(String day, Consumer<DailyPlanRow> consumer) {
         this.dailyPlan = new DailyPlan(day);
+        this.consumer = consumer;
 
         caloriesLabel = new JLabel();
         proteinsLabel = new JLabel();
@@ -49,10 +52,14 @@ public class DailyPlanRow implements NutritionalInfoListener {
     }
 
     @Override
-    public void notifyChange() {
+    public void notifyChange(boolean rebuildModel) {
         caloriesLabel.setText(String.valueOf(dailyPlan.getCalories()));
         proteinsLabel.setText(String.valueOf(dailyPlan.getProteins()));
         lipidsLabel.setText(String.valueOf(dailyPlan.getLipids()));
         fatsLabel.setText(String.valueOf(dailyPlan.getFats()));
+
+        if (rebuildModel) {
+            consumer.accept(this);
+        }
     }
 }

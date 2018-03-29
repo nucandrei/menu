@@ -18,13 +18,13 @@ public class DailyPlan extends NutritionalInfo implements NutritionalInfoListene
     }
 
     @Override
-    public void notifyChange() {
+    public void notifyChange(boolean rebuildModel) {
         setCalories(mealPlans.stream().mapToInt(NutritionalInfo::getCalories).sum());
         setProteins(mealPlans.stream().mapToDouble(NutritionalInfo::getProteins).sum());
         setLipids(mealPlans.stream().mapToDouble(NutritionalInfo::getLipids).sum());
         setFats(mealPlans.stream().mapToDouble(NutritionalInfo::getFats).sum());
 
-        notifyAllListeners();
+        notifyAllListeners(rebuildModel);
     }
 
     String getDay() {
